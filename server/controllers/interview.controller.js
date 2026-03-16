@@ -51,7 +51,11 @@ export const analyzeResume = async(req,res)=>{
             }
         ];
         const aiResponse = await askAi(message);
-        const parsed = JSON.parse(aiResponse);
+        console.log("TYPE:", typeof aiResponse);
+        console.log("AI RESPONSE:", aiResponse);
+
+        const jsonMatch = aiResponse.match(/\{[\s\S]*\}/);
+        const parsed = JSON.parse(jsonMatch[0]);
         
         fs.unlinkSync(filepath);
 
@@ -304,14 +308,14 @@ export const finishInterview = async(req,res)=>{
             return res.status(400).json({message:"failed to find Interview"});
         }
 
-        const totalQuestions = interview.questions.length;
+        const totalQuestions = interview.questions?.length||0;
 
         let totalScore = 0;
         let totalConfidence = 0;
         let totalCommunication = 0;
         let totalCorrectness = 0;
 
-        interview.questions.forEach((q)=>{
+        (interview.questions || []).forEach((q)=>{
             totalScore += q.score || 0;
             totalConfidence += q.confidence || 0;
             totalCommunication += q.communication || 0;
@@ -324,7 +328,7 @@ export const finishInterview = async(req,res)=>{
         const avgCorrectness = totalQuestions?totalCorrectness/totalQuestions:0;
 
         interview.finalScore=finalScore;
-        interview.status="completed";
+        interview.status="Complete";
 
         await interview.save();
 
@@ -344,6 +348,7 @@ export const finishInterview = async(req,res)=>{
         })
     }
     catch(error){
+        console.log(error)
         return res.status(500).json({message:`failed to finish Interview ${error}`});
     }
 }

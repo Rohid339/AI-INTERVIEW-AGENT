@@ -1,0 +1,22 @@
+Component Load
+      │
+      ▼
+loadVoices()
+      │
+      ▼
+female voice select (Zira)
+      │
+      ▼
+Intro speech start
+      │
+      ▼
+AI speaking
+      │
+      ▼
+Intro end
+      │
+      ▼
+First question ask
+      │
+      ▼
+Mic start
