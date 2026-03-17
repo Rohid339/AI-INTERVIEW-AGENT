@@ -188,7 +188,7 @@ function Step1SetUp({ onStart }) {
                                     onChange={(e) => setResumeFile(e.target.files[0])} />
 
                                 <p className='text-gray-600 font-medium'>
-                                    {resumeFile ? resumeFile.name : "Click to upload resume (Optional)"}
+                                    {resumeFile ? resumeFile.name : "Click to upload resume (required)"}
                                 </p>
 
                                 {resumeFile && (
